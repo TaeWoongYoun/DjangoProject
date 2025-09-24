@@ -1,1 +1,1 @@
-웹프레임워크개발 Django 프로젝트
+웹프레임워크개발 Django PROJECT
