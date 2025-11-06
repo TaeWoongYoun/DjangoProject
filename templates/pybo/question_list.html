@@ -1,12 +1,49 @@
-{% if question_list %}
-    <ul>
-    {% for question in question_list %}
-            <li>
+{% extends 'base.html' %}
+
+{% block content %}
+<!-- 기존 아래 코드는 삭제(또는 주석 처리)하고 아래 작성하기, 있으면 테이블 밑으로 질문이 또 보임 -->
+<div class="container my-3">     <!-- class에 “부트스트랩에 정의된 class 스타일” 적용-->
+    <table class="table">
+        <thead>                  <!-- <thead>: table head(표 구조 중 맨위 제목행) -->
+        <tr class="table-dark">     <!-- <tr>: table row, 테이블 맨 위 열 이름이 되는 행-->
+            <th>번호</th>             <!-- <th>: table head-->
+            <th>제목</th>
+            <th>작성일시</th>
+        </tr>
+        </thead>
+        <tbody>                   <!-- <tbody>: table body(표 구조 중 데이터가 들어가는 행) -->
+        {% if question_list %}            <!-- question_list 가 있으면 -->
+        {% for question in question_list %}  <!-- question_list 만큼 for문 반복 -->
+        <tr>
+            <td>{{ forloop.counter }}</td>        <!--<td>: table data, 번호 출력-->
+            <td>
                 <a href="{% url 'pybo:detail' question.id %}">{{ question.subject }}</a>
-            </li>
-    {% endfor %}
-    </ul>
-{% else %}
-    <p>질문이 없습니다.</p>
-{% endif %}
+                               <!--링크 받아서 , 제목 출력-->
+            </td>
+            <td>{{ question.create_date }}</td>    <!--질문 작성일시 출력-->
+        </tr>
+        {% endfor %}
+        {% else %}                     <!-- question_list가 없으면-->
+        <tr>
+            <td colspan="3">질문이 없습니다.</td>    <!--열 3개 병합하여 ‘질문없습니다’ 출력-->
+        </tr>
+        {% endif %}
+        </tbody>
+    </table>
+</div>
+
+{% endblock %}
+
+<!--과거에 쓰다 죽어버린 코드-->
+<!--{% if question_list %}-->
+<!--    <ul>-->
+<!--    {% for question in question_list %}-->
+<!--            <li>-->
+<!--                <a href="{% url 'pybo:detail' question.id %}">{{ question.subject }}</a>-->
+<!--            </li>-->
+<!--    {% endfor %}-->
+<!--    </ul>-->
+<!--{% else %}-->
+<!--    <p>질문이 없습니다.</p>-->
+<!--{% endif %}-->
 
