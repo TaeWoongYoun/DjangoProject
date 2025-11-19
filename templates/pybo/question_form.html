@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container">
+    <h5 class="my-3 border-bottom pb-2">질문등록</h5>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}        #삭제
+
+        <!-- 오류표시 Start -->
+        {% if form.errors %}        <!--question_create 함수에서 form.is_valid()에 에러가 있다면-->
+        <div class="alert alert-danger" role="alert"> <!--경고 형식(분홍색 바탕에 글씨, 결과화면으로 확인) -->
+            {% for field in form %}      <!--폼에서 필드를 하나씩 가져오기-->
+            {% if field.errors %}         <!--필드에 에러가 있으면-->
+            <div>
+                <strong>{{ field.label }}</strong> <!--굵은 글씨로 해당 필드 라벨 표시-->
+                {{ field.errors }}        <!--장고 폼에서 정한 에러가 표시됨(한글로 번역되어 표시) -->
+            </div>
+            {% endif %}
+            {% endfor %}
+        </div>
+        {% endif %}
+        <!-- 오류표시 End -->
+
+        <div class="mb-3">
+            <label for="subject" class="form-label">제목</label>
+            <input type="text" class="form-control" name="subject" id="subject"
+                   value="{{ form.subject.value|default_if_none:'' }}">
+        </div>
+
+        <div class="mb-3">
+            <label for="content" class="form-label">내용</label>
+            <textarea class="form-control" name="content"
+                      id="content" rows="10">{{ form.content.value|default_if_none:'' }}</textarea>
+        </div>
+
+        <button type="submit" class="btn btn-primary">저장하기</button>
+    </form>
+</div>
+{% endblock %}
