@@ -5,7 +5,6 @@
     <h5 class="my-3 border-bottom pb-2">질문등록</h5>
     <form method="post">
         {% csrf_token %}
-        {{ form.as_p }}        #삭제
 
         <!-- 오류표시 Start -->
         {% if form.errors %}        <!--question_create 함수에서 form.is_valid()에 에러가 있다면-->

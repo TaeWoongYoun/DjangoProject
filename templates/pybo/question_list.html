@@ -30,6 +30,47 @@
         {% endif %}
         </tbody>
     </table>
+
+    <!-- 페이징처리 시작 -->
+    <ul class="pagination justify-content-center">
+        {% if question_list.has_previous %}   <!-- 이전 페이지가 있으면 -->
+        <li class="page-item">
+            <a class="page-link" href="?page={{ question_list.previous_page_number }}">이전</a>
+        </li>                <!-- 이전 페이지 번호로 링크를 만들어, [이전] 버튼의 링크 활성화 -->
+        {% else %}   <!-- 이전 페이지가 없다면 -->
+        <li class="page-item disabled">
+            <a class="page-link" tabindex="-1" aria-disabled="true" href="#">이전</a>
+        </li>              <!-- 포커스 제거(-1), 현재상태 비활성화(true), [이전] 버튼의 링크 비활성화 -->
+        {% endif %}
+
+        <!-- 페이지리스트 -->
+        {% for page_number in question_list.paginator.page_range %}
+        {% if page_number >= question_list.number|add:-5 and page_number <= question_list.number|add:5 %}
+                          <!--페이지 리스트 루프, 페이지 범위에서 한 개씩 가져옴 -->
+        {% if page_number == question_list.number %}
+        <li class="page-item active" aria-current="page"> <!-- active 클래스 적용하여 강조표시 -->
+            <a class="page-link" href="?page={{ page_number }}">{{ page_number }}</a>
+        </li>                 <!-- 페이지 번호로 링크를 만들어, [페이지 번호]의 링크를 활성화 -->
+        {% else %}  <!-- 페이지 리스트의 번호와 현재 페이지(number)와 다르면(리스트의 다른 번호들) -->
+        <li class="page-item"> <!-- active 클래스 없음, 강조표시 없음-->
+            <a class="page-link" href="?page={{ page_number }}">{{ page_number }}</a>
+        </li>                   <!-- 강조가 없을 뿐, [페이지 번호]들의 링크는 활성화 -->
+        {% endif %}
+        {% endif %}
+        {% endfor %}
+
+        <!-- 다음페이지 -->
+        {% if question_list.has_next %}   <!-- 다음 페이지가 있으면 -->
+        <li class="page-item">
+            <a class="page-link" href="?page={{ question_list.next_page_number }}">다음</a>
+        </li>                       <!-- 다음 페이지 번호로 링크를 만들어, [다음] 버튼의 링크 활성화 -->
+        {% else %}  <!-- 다음 페이지가 없다면 -->
+        <li class="page-item disabled">
+            <a class="page-link" tabindex="-1" aria-disabled="true" href="#">다음</a>
+        </li>             <!-- 포거스 제거(-1), 현재상태 비활성화(true), [다음] 버튼의 링크 비활성화 -->
+        {% endif %}
+    </ul>
+    <!-- 페이징처리 끝 -->
     <a href="{% url 'pybo:question_create' %}" class="btn btn-primary">질문 등록하기</a>
 </div>
 
