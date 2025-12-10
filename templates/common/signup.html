@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container my-3">
+    <form method="post" action="{% url 'common:signup' %}">
+       <!-- 이 폼은 post방식으로 common:signup URL로 이동 > views.signup 함수 실행할 것임 -->
+        {% csrf_token %}
+        {% include "form_errors.html" %}     <!-- 에러 발생시 사용할 템플릿 가져옴-->
+        <div class="mb-3">
+            <label for="username">사용자 이름</label>  <!--username을 위한 라벨-->
+            <input type="text" class="form-control" name="username" id="username"
+                   value="{{ form.username.value|default_if_none:'' }}"><!--폼으로 username을 입력 받음-->
+        </div>
+        <div class="mb-3">
+            <label for="password1">비밀번호</label>    <!-- password1을 위한 라벨-->
+            <input type="password" class="form-control" name="password1" id="password1"
+                   value="{{ form.password1.value|default_if_none:'' }}"> <!-- 폼으로 password1을 입력 받음-->
+        </div>
+        <div class="mb-3">
+            <label for="password2">비밀번호 확인</label>  <!-- password2를 위한 라벨-->
+            <input type="password" class="form-control" name="password2" id="password2"
+                   value="{{ form.password2.value|default_if_none:'' }}"> <!-- 폼으로 password2를 입력 받음 -->
+        </div>
+        <div class="mb-3">
+            <label for="email">이메일</label>  <!-- email을 위한 라벨-->
+            <input type="text" class="form-control" name="email" id="email"
+                   value="{{ form.email.value|default_if_none:'' }}">  <!-- 폼으로 email을 입력 받음 -->
+        </div>
+        <button type="submit" class="btn btn-primary">생성하기</button> <!--‘생성하기’ 버튼으로 값 전송-->
+    </form>
+</div>
+{% endblock %}

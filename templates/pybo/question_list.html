@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load pybo_filter %}
 
 {% block content %}
 <!-- 기존 아래 코드는 삭제(또는 주석 처리)하고 아래 작성하기, 있으면 테이블 밑으로 질문이 또 보임 -->
@@ -15,9 +16,14 @@
         {% if question_list %}            <!-- question_list 가 있으면 -->
         {% for question in question_list %}  <!-- question_list 만큼 for문 반복 -->
         <tr>
-            <td>{{ forloop.counter }}</td>        <!--<td>: table data, 번호 출력-->
+            <td>
+                {{question_list.paginator.count|sub:question_list.start_index|sub:forloop.counter0|add:1}}
+            </td>
             <td>
                 <a href="{% url 'pybo:detail' question.id %}">{{ question.subject }}</a>
+                {% if question.answer_set.count > 0 %}
+                <span class="text-danger small mx-2">{{question.answer_set.count}}</span>
+                {% endif %}
                                <!--링크 받아서 , 제목 출력-->
             </td>
             <td>{{ question.create_date }}</td>    <!--질문 작성일시 출력-->
