@@ -1,0 +1,7 @@
+# GitHub Linguist 언어 통계 보정 — Django(Python) 프로젝트로 표시
+# 템플릿(HTML)은 화면 표현, static은 Bootstrap 벤더라 통계에서 제외한다.
+
+templates/**      linguist-vendored
+static/**         linguist-vendored
+.idea/**          linguist-vendored
+*.md              linguist-documentation
